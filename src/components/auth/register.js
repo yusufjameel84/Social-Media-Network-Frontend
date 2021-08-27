@@ -1,4 +1,5 @@
 import React , {useState} from 'react';
+import axios from 'axios';
 
 function Register() {
 
@@ -21,16 +22,17 @@ function Register() {
   const onSubmit = (e) => {
     e.preventDefault();          // prevent from following a link
 
-    const newUser ={
-      name : values.name,
+    const newUser = {
+      name: values.name,
       email: values.email,
       password: values.password,
       password2: values.password2
     }
 
-    console.log(newUser) ; 
+    axios.post('/api/users/register', newUser)
+      .then(res => console.log(res.data))
+      .catch(err => console.log(err.response.data));
   }
-
 
   return (
     <div className="register">
@@ -44,8 +46,8 @@ function Register() {
               <input type="text" className="form-control form-control-lg" placeholder="Name" name="name" value = {values.name} onChange={handleOnChange} input />
             </div>
             <div className="form-group">
-              <input type="email" className="form-control form-control-lg" placeholder="Email Address" name="email" value = {values.email}  onChange={handleOnChange}/>
-              <small classNameName="form-text text-muted">This site uses Gravatar so if you want a profile image, use a Gravatar email</small>
+              <input type="email" className="form-control form-control-lg" placeholder="Email Address" name="email" value = {values.email}  onChange={handleOnChange} />
+              <small className="form-text text-muted">This site uses Gravatar so if you want a profile image, use a Gravatar email</small>
             </div>
             <div className="form-group">
               <input type="password" className="form-control form-control-lg" placeholder="Password" name="password" value = {values.password}  onChange={handleOnChange}/>
